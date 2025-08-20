@@ -18,11 +18,11 @@ public class Address {
     private String postalCode;
     private String complement;
 
-    public Address(AddressRequest request) {
-        street = request.street();
-        number = request.number();
-        neighborhood = request.neighborhood();
-        postalCode = request.postalCode();
-        complement = request.complement();
+    public Address(AddressRequest dto) {
+        street = dto.street();
+        number = dto.number();
+        neighborhood = dto.neighborhood();
+        postalCode = dto.postalCode();
+        complement = dto.complement();
     }
 }
