@@ -1,17 +1,19 @@
 package io.github.hansel.vetclinic.api.dto.request;
 
-import io.github.hansel.vetclinic.api.entity.common.Address;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 
 public record CustomerRequest(
-        @NotBlank
+        @NotBlank(message = "Name cannot be blank")
+        @Size(min = 2, max = 100, message = "Name must be between 2 and 100 characters")
         String name,
-        @NotBlank
+        @NotBlank(message = "Phone cannot be blank")
+        @Pattern(regexp = "^[0-9]{10,11}$", message = "Phone number must have 10 or 11 digits")
         String phone,
-        @NotBlank
+        @NotBlank(message = "Email cannot be blank")
+        @Email(message = "Email must be valid")
         String email,
-        @NotNull @Valid
-        Address address) {
+        @NotNull(message = "Address is required")
+        @Valid
+        AddressRequest address) {
 }
