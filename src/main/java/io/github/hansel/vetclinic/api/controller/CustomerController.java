@@ -1,6 +1,7 @@
 package io.github.hansel.vetclinic.api.controller;
 
 import io.github.hansel.vetclinic.api.dto.request.CustomerRequest;
+import io.github.hansel.vetclinic.api.dto.response.CustomerDetailResponse;
 import io.github.hansel.vetclinic.api.dto.response.CustomerSummaryResponse;
 import io.github.hansel.vetclinic.api.service.CustomerService;
 import jakarta.validation.Valid;
@@ -32,9 +33,12 @@ public class CustomerController {
     @GetMapping
     @Transactional(readOnly = true)
     public ResponseEntity<Page<CustomerSummaryResponse>> findAll(@PageableDefault(size = 10, sort = {"id"}) Pageable pageable) {
-        var page = service.findAll(pageable);
-
-        return ResponseEntity.ok(page);
+        return ResponseEntity.ok(service.findAll(pageable));
     }
 
+    @GetMapping("/{id}")
+    @Transactional(readOnly = true)
+    public ResponseEntity<CustomerDetailResponse> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findById(id));
+    }
 }

@@ -4,6 +4,7 @@ import io.github.hansel.vetclinic.api.dto.request.CustomerRequest;
 import io.github.hansel.vetclinic.api.dto.response.CustomerDetailResponse;
 import io.github.hansel.vetclinic.api.dto.response.CustomerSummaryResponse;
 import io.github.hansel.vetclinic.api.entity.Customer;
+import io.github.hansel.vetclinic.api.exception.NotFoundException;
 import io.github.hansel.vetclinic.api.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,5 +26,12 @@ public class CustomerService {
 
     public Page<CustomerSummaryResponse> findAll(Pageable pageable) {
         return repository.findAll(pageable).map(CustomerSummaryResponse::new);
+    }
+
+    public CustomerDetailResponse findById(Long id) {
+        var customer = repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Customer not found with id " + id));
+
+        return new CustomerDetailResponse(customer);
     }
 }

@@ -36,6 +36,6 @@ public class Customer {
         name = dto.name();
         phone = dto.phone();
         email = dto.email();
-        address = dto.address();
+        address = new Address(dto.address());
     }
 }
