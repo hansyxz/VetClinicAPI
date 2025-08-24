@@ -12,8 +12,8 @@ public record CustomerRequest(
         String phone,
         @NotBlank(message = "Email cannot be blank")
         @Email(message = "Email must be valid")
+        @Size(max = 100, message = "Email must not exceed 100 characters")
         String email,
         @NotNull(message = "Address is required")
         @Valid
-        AddressRequest address) {
-}
+        AddressRequest address) {}

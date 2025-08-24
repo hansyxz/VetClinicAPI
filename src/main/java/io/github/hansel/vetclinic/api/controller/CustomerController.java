@@ -33,12 +33,25 @@ public class CustomerController {
     @GetMapping
     @Transactional(readOnly = true)
     public ResponseEntity<Page<CustomerSummaryResponse>> findAll(@PageableDefault(size = 10, sort = {"id"}) Pageable pageable) {
-        return ResponseEntity.ok(service.findAll(pageable));
+        return ResponseEntity.ok(service.findAllByActiveTrue(pageable));
     }
 
     @GetMapping("/{id}")
     @Transactional(readOnly = true)
     public ResponseEntity<CustomerDetailResponse> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(service.findById(id));
+        return ResponseEntity.ok(service.findByIdAndActiveTrue(id));
+    }
+
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity update(@Valid @RequestBody CustomerRequest request, @PathVariable Long id) {
+        return ResponseEntity.ok(service.update(request, id));
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity delete(@PathVariable Long id) {
+        service.deactivate(id);
+        return ResponseEntity.noContent().build();
     }
 }

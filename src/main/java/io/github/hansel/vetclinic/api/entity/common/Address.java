@@ -25,4 +25,12 @@ public class Address {
         postalCode = dto.postalCode();
         complement = dto.complement();
     }
+
+    public void update(AddressRequest dto) {
+        this.street = dto.street() != null ? dto.street() : this.street;
+        this.number = dto.number() != null ? dto.number() : this.number;
+        this.neighborhood = dto.neighborhood() != null ? dto.neighborhood() : this.neighborhood;
+        this.postalCode = dto.postalCode() != null ? dto.postalCode() : this.postalCode;
+        this.complement = dto.complement() != null ? dto.complement() : this.complement;
+    }
 }

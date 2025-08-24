@@ -13,5 +13,4 @@ public record AddressRequest(
         @NotBlank(message = "PostalCode cannot be blank")
         @Pattern(regexp = "\\d{8}", message = "PostalCode must have exactly 8 digits")
         String postalCode,
-        String complement) {
-}
+        String complement) {}
