@@ -23,7 +23,7 @@ public class CustomerService {
     public CustomerRepository repository;
 
     public CustomerDetailResponse create(CustomerRequest request) {
-        validateUniqueFields(request.phone(), request.email());
+        validateUniqueFieldsToCreate(request.phone(), request.email());
 
         var customer = new Customer(request);
         repository.save(customer);
@@ -43,8 +43,10 @@ public class CustomerService {
     }
 
     public CustomerDetailResponse update(CustomerRequest request, Long id) {
-        var customer = repository.findById(id)
+        var customer = repository.findByIdAndActiveTrue(id)
                 .orElseThrow(() -> new NotFoundException("Customer not found with id " + id));
+
+        validateUniqueFieldsToUpdate(customer.getId(), request.phone(), request.email());
         customer.update(request);
 
         return new CustomerDetailResponse(customer);
@@ -53,10 +55,18 @@ public class CustomerService {
     public void deactivate(Long id) {
         var customer = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Customer not found with id " + id));
+
         customer.deactivate();
     }
 
-    public void validateUniqueFields(String phone, String email) {
+    public void activate(Long id) {
+        var customer = repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Customer not found with id " + id));
+
+        customer.activate();
+    }
+
+    public void validateUniqueFieldsToCreate(String phone, String email) {
         List<ErrorResponse.FieldErrorResponse> errors = new ArrayList<>();
 
         if (repository.existsByPhone(phone)) {
@@ -65,6 +75,24 @@ public class CustomerService {
         if (repository.existsByEmail(email)) {
             errors.add(new ErrorResponse.FieldErrorResponse("email", "Email already exists"));
         }
+        if (!errors.isEmpty()) {
+            throw new BusinessValidationException(errors);
+        }
+    }
+
+    public void validateUniqueFieldsToUpdate(Long id, String phone, String email) {
+        List<ErrorResponse.FieldErrorResponse> errors = new ArrayList<>();
+
+        repository.findByPhone(phone).ifPresent(existing -> {
+            if (!existing.getId().equals(id)) {
+                errors.add(new ErrorResponse.FieldErrorResponse("phone", "Phone already exists"));
+            }
+        });
+        repository.findByEmail(email).ifPresent(existing -> {
+            if (!existing.getId().equals(id)) {
+                errors.add(new ErrorResponse.FieldErrorResponse("email", "Email already exists"));
+            }
+        });
         if (!errors.isEmpty()) {
             throw new BusinessValidationException(errors);
         }

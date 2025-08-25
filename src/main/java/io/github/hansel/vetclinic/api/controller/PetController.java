@@ -23,7 +23,7 @@ public class PetController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity create(@Valid @RequestBody PetRequest request, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<PetDetailResponse> create(@Valid @RequestBody PetRequest request, UriComponentsBuilder uriBuilder) {
         var response = service.create(request);
         var uri = uriBuilder.path("/pet/{id}").buildAndExpand(response.id()).toUri();
 
@@ -44,14 +44,21 @@ public class PetController {
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity update(@Valid @RequestBody PetRequest request, @PathVariable Long id) {
+    public ResponseEntity<PetDetailResponse> update(@Valid @RequestBody PetRequest request, @PathVariable Long id) {
         return ResponseEntity.ok(service.update(request, id));
     }
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.deactivate(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/restore")
+    @Transactional
+    public ResponseEntity<Void> restore(@PathVariable Long id) {
+        service.activate(id);
         return ResponseEntity.noContent().build();
     }
 }

@@ -44,14 +44,21 @@ public class CustomerController {
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity update(@Valid @RequestBody CustomerRequest request, @PathVariable Long id) {
+    public ResponseEntity<CustomerDetailResponse> update(@Valid @RequestBody CustomerRequest request, @PathVariable Long id) {
         return ResponseEntity.ok(service.update(request, id));
     }
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.deactivate(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/restore")
+    @Transactional
+    public ResponseEntity<Void> restore(@PathVariable Long id) {
+        service.activate(id);
         return ResponseEntity.noContent().build();
     }
 }

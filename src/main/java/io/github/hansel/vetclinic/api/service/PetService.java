@@ -46,7 +46,7 @@ public class PetService {
     }
 
     public PetDetailResponse findByIdAndActiveTrue(Long id) {
-        var pet = petRepository.findById(id)
+        var pet = petRepository.findByIdAndActiveTrue(id)
                 .orElseThrow(() -> new NotFoundException("Pet not found with id " + id));
 
         return new PetDetailResponse(pet);
@@ -71,6 +71,13 @@ public class PetService {
                 .orElseThrow(() -> new NotFoundException("Pet not found with id " + id));
 
         pet.deactivate();
+    }
+
+    public void activate(Long id) {
+        var pet = petRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Pet not found with id " + id));
+
+        pet.activate();
     }
 
     private void validateSpecies(PetRequest request) {

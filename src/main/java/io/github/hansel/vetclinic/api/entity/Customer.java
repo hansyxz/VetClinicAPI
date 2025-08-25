@@ -1,12 +1,15 @@
 package io.github.hansel.vetclinic.api.entity;
 
+import io.github.hansel.vetclinic.api.dto.error.ErrorResponse;
 import io.github.hansel.vetclinic.api.dto.request.CustomerRequest;
 import io.github.hansel.vetclinic.api.entity.common.Address;
+import io.github.hansel.vetclinic.api.exception.BadRequestException;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +45,7 @@ public class Customer {
     private Address address;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Where(clause = "active = true")
     private List<Pet> pets = new ArrayList<>();
 
     @Column(nullable = false)
@@ -56,18 +60,30 @@ public class Customer {
     }
 
     public void update(CustomerRequest dto) {
-        this.name = dto.name() != null ? dto.name() : this.name;
-        this.phone = dto.phone() != null ? dto.phone() : this.phone;
-        this.email = dto.email() != null ? dto.email() : this.email;
+        name = dto.name() != null ? dto.name() : name;
+        phone = dto.phone() != null ? dto.phone() : phone;
+        email = dto.email() != null ? dto.email() : email;
         if (dto.address() != null) {
-            this.address.update(dto.address());
+            address.update(dto.address());
         }
     }
 
     public void deactivate() {
-        if (!this.active) {
-            throw new IllegalStateException("Customer is already inactive");
+        if (!active) {
+            throw new BadRequestException(
+                    List.of(new ErrorResponse.FieldErrorResponse("active", "Customer is already inactive"))
+            );
         }
-        this.active = false;
+        active = false;
+        pets.forEach(Pet::deactivate);
+    }
+
+    public void activate() {
+        if (active) {
+            throw new BadRequestException(
+                    List.of(new ErrorResponse.FieldErrorResponse("active", "Customer is already active"))
+            );
+        }
+        active = true;
     }
 }

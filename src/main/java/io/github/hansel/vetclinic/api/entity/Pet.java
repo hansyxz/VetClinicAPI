@@ -1,8 +1,10 @@
 package io.github.hansel.vetclinic.api.entity;
 
+import io.github.hansel.vetclinic.api.dto.error.ErrorResponse;
 import io.github.hansel.vetclinic.api.dto.request.PetRequest;
 import io.github.hansel.vetclinic.api.entity.enums.Gender;
 import io.github.hansel.vetclinic.api.entity.enums.Species;
+import io.github.hansel.vetclinic.api.exception.BadRequestException;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -10,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Table(name = "pet")
 @Entity
@@ -81,8 +84,19 @@ public class Pet {
 
     public void deactivate() {
         if (!active) {
-            throw new IllegalStateException("Pet is already inactive");
+            throw new BadRequestException(
+                    List.of(new ErrorResponse.FieldErrorResponse("active", "Pet is already inactive"))
+            );
         }
         active = false;
+    }
+
+    public void activate() {
+        if (active) {
+            throw new BadRequestException(
+                    List.of(new ErrorResponse.FieldErrorResponse("active", "Pet is already active"))
+            );
+        }
+        active = true;
     }
 }

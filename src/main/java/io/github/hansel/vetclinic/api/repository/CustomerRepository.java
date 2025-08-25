@@ -10,8 +10,10 @@ import java.util.Optional;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
-    Optional<Customer> findByIdAndActiveTrue(Long id);
     Page<Customer> findAllByActiveTrue(Pageable pageable);
-    boolean existsByEmail(String email);
+    Optional<Customer> findByIdAndActiveTrue(Long id);
     boolean existsByPhone(String phone);
+    boolean existsByEmail(String email);
+    Optional<Customer> findByPhone(String phone);
+    Optional<Customer> findByEmail(String email);
 }
