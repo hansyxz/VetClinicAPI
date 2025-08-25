@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @RestControllerAdvice
@@ -19,7 +20,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleValidationException(MethodArgumentNotValidException ex, HttpServletRequest request) {
-        List<ErrorResponse.FieldErrorResponse> errors = ex.getBindingResult().getFieldErrors().stream()
+        List<ErrorResponse.FieldErrorResponse> errors = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
                 .map(error -> new ErrorResponse.FieldErrorResponse(
                         error.getField(),
                         error.getDefaultMessage()
@@ -28,8 +31,8 @@ public class GlobalExceptionHandler {
 
         return new ErrorResponse(
                 HttpStatus.BAD_REQUEST.value(),
-                "Validation Error",
-                "Some fields are invalid",
+                "Bad Request",
+                "One or more fields are invalid",
                 errors,
                 request.getRequestURI()
         );
@@ -42,7 +45,7 @@ public class GlobalExceptionHandler {
                 HttpStatus.NOT_FOUND.value(),
                 "Not Found",
                 ex.getMessage(),
-                null,
+                Collections.emptyList(),
                 request.getRequestURI()
         );
     }
@@ -54,7 +57,7 @@ public class GlobalExceptionHandler {
                 HttpStatus.BAD_REQUEST.value(),
                 "Bad Request",
                 ex.getMessage(),
-                null,
+                ex.getFieldErrors(),
                 request.getRequestURI()
         );
     }
@@ -66,7 +69,7 @@ public class GlobalExceptionHandler {
                 HttpStatus.BAD_REQUEST.value(),
                 "Malformed JSON Request",
                 "Request body is invalid or incorrectly formatted",
-                null,
+                Collections.emptyList(),
                 request.getRequestURI()
         );
     }
@@ -106,4 +109,16 @@ public class GlobalExceptionHandler {
                 errors,
                 request.getRequestURI()
         );    }
+
+    @ExceptionHandler(ForbiddenOperationException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ErrorResponse handleForbiddenOperation(ForbiddenOperationException ex, HttpServletRequest request) {
+        return new ErrorResponse(
+                HttpStatus.FORBIDDEN.value(),
+                "Forbidden",
+                "Operation not allowed",
+                ex.getFieldErrors(),
+                request.getRequestURI()
+        );
+    }
 }

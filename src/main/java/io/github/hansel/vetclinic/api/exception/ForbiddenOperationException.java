@@ -6,11 +6,11 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class BadRequestException extends RuntimeException {
+public class ForbiddenOperationException extends RuntimeException {
     private final List<ErrorResponse.FieldErrorResponse> fieldErrors;
 
-    public BadRequestException(List<ErrorResponse.FieldErrorResponse> fieldErrors) {
-        super("Some fields are invalid");
+    public ForbiddenOperationException(List<ErrorResponse.FieldErrorResponse> fieldErrors) {
+        super("Forbidden operation");
         this.fieldErrors = fieldErrors;
     }
 }
