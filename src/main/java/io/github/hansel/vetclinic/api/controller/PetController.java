@@ -1,8 +1,6 @@
 package io.github.hansel.vetclinic.api.controller;
 
 import io.github.hansel.vetclinic.api.dto.request.PetRequest;
-import io.github.hansel.vetclinic.api.dto.response.CustomerDetailResponse;
-import io.github.hansel.vetclinic.api.dto.response.CustomerSummaryResponse;
 import io.github.hansel.vetclinic.api.dto.response.PetDetailResponse;
 import io.github.hansel.vetclinic.api.dto.response.PetSummaryResponse;
 import io.github.hansel.vetclinic.api.service.PetService;
@@ -25,7 +23,7 @@ public class PetController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity create(@RequestBody @Valid PetRequest request, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity create(@Valid @RequestBody PetRequest request, UriComponentsBuilder uriBuilder) {
         var response = service.create(request);
         var uri = uriBuilder.path("/pet/{id}").buildAndExpand(response.id()).toUri();
 
@@ -35,12 +33,25 @@ public class PetController {
     @GetMapping
     @Transactional(readOnly = true)
     public ResponseEntity<Page<PetSummaryResponse>> findAll(@PageableDefault(size = 10, sort = {"id"}) Pageable pageable) {
-        return ResponseEntity.ok(service.findAll(pageable));
+        return ResponseEntity.ok(service.findAllByActiveTrue(pageable));
     }
 
     @GetMapping("/{id}")
     @Transactional(readOnly = true)
     public ResponseEntity<PetDetailResponse> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(service.findById(id));
+        return ResponseEntity.ok(service.findByIdAndActiveTrue(id));
+    }
+
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity update(@Valid @RequestBody PetRequest request, @PathVariable Long id) {
+        return ResponseEntity.ok(service.update(request, id));
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity delete(@PathVariable Long id) {
+        service.deactivate(id);
+        return ResponseEntity.noContent().build();
     }
 }

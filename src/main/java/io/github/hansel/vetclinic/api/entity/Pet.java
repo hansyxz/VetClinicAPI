@@ -21,22 +21,39 @@ public class Pet {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false, length = 100)
     private String name;
+
+    @Column(nullable = false)
     private Integer age;
+
+    @Column(precision = 5, scale = 2)
     private BigDecimal weightKg;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Gender gender;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Species species;
+
+    @Column(length = 100)
     private String otherSpecies;
+
+    @Column(nullable = false, length = 100)
     private String breed;
+
+    @Column(length = 300)
     private String notes;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer owner;
+
+    @Column(nullable = false)
+    private boolean active;
 
     public Pet(PetRequest dto, Customer customer) {
         name = dto.name();
@@ -48,5 +65,24 @@ public class Pet {
         breed = dto.breed();
         notes = dto.notes();
         owner = customer;
+        active = true;
+    }
+
+    public void update(PetRequest dto) {
+        name = dto.name() != null ? dto.name() : name;
+        age = dto.age() != null ? dto.age() : age;
+        weightKg = dto.weightKg() != null ? dto.weightKg() : weightKg;
+        gender = dto.gender() != null ? dto.gender() : gender;
+        species = dto.species() != null ? dto.species() : species;
+        otherSpecies = dto.otherSpecies() != null ? dto.otherSpecies() : otherSpecies;
+        breed = dto.breed() != null ? dto.breed() : breed;
+        notes = dto.notes() != null ? dto.notes() : notes;
+    }
+
+    public void deactivate() {
+        if (!active) {
+            throw new IllegalStateException("Pet is already inactive");
+        }
+        active = false;
     }
 }

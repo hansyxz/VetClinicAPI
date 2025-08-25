@@ -6,7 +6,7 @@ import io.github.hansel.vetclinic.api.entity.enums.Species;
 
 import java.math.BigDecimal;
 
-public record PetDetailResponse(Long ownerId, Long id, String name, String formattedAge, BigDecimal weightKg, Gender gender,
+public record PetDetailResponse(Long ownerId, Long id, String name, String age, BigDecimal weightKg, Gender gender,
                                 Species species, String otherSpecies, String breed, String notes) {
         public PetDetailResponse(Pet pet){
                 this(pet.getOwner().getId(), pet.getId(), pet.getName(), formatAge(pet.getAge()), pet.getWeightKg(), pet.getGender(),
