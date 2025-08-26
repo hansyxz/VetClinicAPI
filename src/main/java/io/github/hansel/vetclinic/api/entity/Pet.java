@@ -25,7 +25,7 @@ public class Pet {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 50)
     private String name;
 
     @Column(nullable = false)
@@ -42,13 +42,13 @@ public class Pet {
     @Column(nullable = false)
     private Species species;
 
-    @Column(length = 100)
+    @Column(length = 30)
     private String otherSpecies;
 
-    @Column(nullable = false, length = 100)
+    @Column( length = 30)
     private String breed;
 
-    @Column(length = 300)
+    @Column(columnDefinition = "TEXT")
     private String notes;
 
     @ManyToOne(fetch = FetchType.LAZY)
