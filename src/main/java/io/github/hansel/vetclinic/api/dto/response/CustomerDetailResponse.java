@@ -4,7 +4,8 @@ import io.github.hansel.vetclinic.api.entity.Customer;
 
 import java.util.List;
 
-public record CustomerDetailResponse(Long id, String name, String phone, String email, AddressResponse address, List<PetDetailResponse> pets) {
+public record CustomerDetailResponse(Long id, String name, String phone, String email,
+                                     AddressResponse address, List<PetDetailResponse> pets) {
     public CustomerDetailResponse(Customer customer) {
         this(customer.getId(), customer.getName(), customer.getPhone(), customer.getEmail(),
                 new AddressResponse(customer.getAddress()),

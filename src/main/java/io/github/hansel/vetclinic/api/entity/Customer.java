@@ -16,7 +16,7 @@ import java.util.List;
 
 
 @Table(
-        name = "customer",
+        name = "customers",
         uniqueConstraints = {
                 @UniqueConstraint(name = "uk_user_phone", columnNames = "phone"),
                 @UniqueConstraint(name = "uk_user_email", columnNames = "email")
@@ -63,9 +63,7 @@ public class Customer {
         name = dto.name() != null ? dto.name() : name;
         phone = dto.phone() != null ? dto.phone() : phone;
         email = dto.email() != null ? dto.email() : email;
-        if (dto.address() != null) {
-            address.update(dto.address());
-        }
+        address.update(dto.address());
     }
 
     public void deactivate() {

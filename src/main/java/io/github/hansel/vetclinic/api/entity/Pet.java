@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.util.List;
 
-@Table(name = "pet")
-@Entity
+@Table(name = "pets")
+@Entity(name = "Pet")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
