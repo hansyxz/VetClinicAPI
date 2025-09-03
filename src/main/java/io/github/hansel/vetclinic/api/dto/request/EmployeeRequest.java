@@ -10,10 +10,7 @@ public record EmployeeRequest(
         @NotNull(message = "Role is required")
         Role role,
         @Size(max = 20, message = "CRMV must not exceed 20 characters")
-        @Pattern(
-                regexp = "^[0-9]{4,6}-[A-Z]{2}$",
-                message = "CRMV must be in the format 12345-XX"
-        )
+        @Pattern(regexp = "^[0-9]{4,6}-[A-Z]{2}$", message = "CRMV must be in the format 12345-XX")
         String crmv,
         @NotBlank(message = "Phone cannot be blank")
         @Pattern(regexp = "^[0-9]{10,11}$", message = "Phone number must have 10 or 11 digits")

@@ -1,14 +1,17 @@
 package io.github.hansel.vetclinic.api.entity;
 
+import io.github.hansel.vetclinic.api.dto.error.ErrorResponse;
 import io.github.hansel.vetclinic.api.dto.request.EmployeeRequest;
 import io.github.hansel.vetclinic.api.entity.enums.Role;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import io.github.hansel.vetclinic.api.exception.BadRequestException;
+import io.github.hansel.vetclinic.api.exception.BusinessValidationException;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Table(
         name = "employees",
@@ -23,19 +26,64 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class Employee {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false, length = 100)
     private String name;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Role role;
+
+    @Column(length = 20)
     private String crmv;
+
+    @Column(nullable = false, length = 11, unique = true)
     private String phone;
+
+    @Column(nullable = false, length = 100, unique = true)
     private String email;
+
+    @Column(nullable = false)
     private boolean active;
 
     public Employee(EmployeeRequest dto) {
         name = dto.name();
         role = dto.role();
+        if (role != Role.VET && dto.crmv() != null) {
+            throw new BusinessValidationException(
+                    List.of(new ErrorResponse.FieldErrorResponse("crmv", "CRMV is only allowed for employees with role VET"))
+            );
+        }
         crmv = dto.crmv();
         phone = dto.phone();
         email = dto.email();
+        active = true;
+    }
+
+    public void update(EmployeeRequest dto) {
+        name = dto.name() != null ? dto.name() : name;
+        phone = dto.phone() != null ? dto.phone() : phone;
+        email = dto.email() != null ? dto.email() : email;
+    }
+
+    public void deactivate() {
+        if (!active) {
+            throw new BadRequestException(
+                    List.of(new ErrorResponse.FieldErrorResponse("active", "Employee is already inactive"))
+            );
+        }
+        active = false;
+    }
+
+    public void activate() {
+        if (active) {
+            throw new BadRequestException(
+                    List.of(new ErrorResponse.FieldErrorResponse("active", "Employee is already active"))
+            );
+        }
+        active = true;
     }
 }
