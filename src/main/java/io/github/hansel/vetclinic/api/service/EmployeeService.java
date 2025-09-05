@@ -24,7 +24,7 @@ public class EmployeeService {
     public EmployeeRepository repository;
 
     public EmployeeDetailResponse create(EmployeeRequest request) {
-        validateFieldsToCreate(request.role(), request.crmv(), request.email(), request.phone());
+        validateFieldsToCreate(request.role(), request.crmv(), request.phone(), request.email());
 
         var eployee = new Employee(request);
         repository.save(eployee);
@@ -47,7 +47,7 @@ public class EmployeeService {
         var employee = repository.findByIdAndActiveTrue(id)
                 .orElseThrow(() -> new NotFoundException("Employee not found with id " + id));
 
-        validateUniqueFieldsToUpdate(employee.getId(), request.phone(), request.email());
+        validateUniqueFieldsToUpdate(employee.getId(), request.crmv(), request.phone(), request.email());
         validateRoleAndCrmvUpdate(employee, request);
         employee.update(request);
 
@@ -74,6 +74,9 @@ public class EmployeeService {
         if (role != Role.VET && crmv != null) {
             errors.add(new ErrorResponse.FieldErrorResponse("crmv", "CRMV is only allowed for employees with role VET"));
         }
+        if (repository.existsByCrmv(crmv)) {
+            errors.add(new ErrorResponse.FieldErrorResponse("crmv", "CRMV already exists"));
+        }
         if (repository.existsByPhone(phone)) {
             errors.add(new ErrorResponse.FieldErrorResponse("phone", "Phone already exists"));
         }
@@ -85,9 +88,14 @@ public class EmployeeService {
         }
     }
 
-    public void validateUniqueFieldsToUpdate(Long id, String phone, String email) {
+    public void validateUniqueFieldsToUpdate(Long id, String crmv, String phone, String email) {
         List<ErrorResponse.FieldErrorResponse> errors = new ArrayList<>();
 
+        repository.findByCrmv(crmv).ifPresent(existing -> {
+            if (!existing.getId().equals(id)) {
+                errors.add(new ErrorResponse.FieldErrorResponse("crmv", "CRMV already exists"));
+            }
+        });
         repository.findByPhone(phone).ifPresent(existing -> {
             if (!existing.getId().equals(id)) {
                 errors.add(new ErrorResponse.FieldErrorResponse("phone", "Phone already exists"));

@@ -53,7 +53,7 @@ public class PetService {
     }
 
     public PetDetailResponse update(PetRequest request, Long id) {
-        var pet = petRepository.findById(id)
+        var pet = petRepository.findByIdAndActiveTrue(id)
                 .orElseThrow(() -> new NotFoundException("Pet not found with id " + id));
 
         var customer = customerRepository.findByIdAndActiveTrue(request.ownerId())

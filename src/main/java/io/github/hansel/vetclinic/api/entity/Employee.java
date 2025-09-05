@@ -4,7 +4,6 @@ import io.github.hansel.vetclinic.api.dto.error.ErrorResponse;
 import io.github.hansel.vetclinic.api.dto.request.EmployeeRequest;
 import io.github.hansel.vetclinic.api.entity.enums.Role;
 import io.github.hansel.vetclinic.api.exception.BadRequestException;
-import io.github.hansel.vetclinic.api.exception.BusinessValidationException;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -52,11 +51,6 @@ public class Employee {
     public Employee(EmployeeRequest dto) {
         name = dto.name();
         role = dto.role();
-        if (role != Role.VET && dto.crmv() != null) {
-            throw new BusinessValidationException(
-                    List.of(new ErrorResponse.FieldErrorResponse("crmv", "CRMV is only allowed for employees with role VET"))
-            );
-        }
         crmv = dto.crmv();
         phone = dto.phone();
         email = dto.email();

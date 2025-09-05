@@ -12,9 +12,10 @@ import java.util.Optional;
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     Page<Employee> findAllByActiveTrue(Pageable pageable);
     Optional<Employee> findByIdAndActiveTrue(Long id);
+    boolean existsByCrmv(String crmv);
     boolean existsByPhone(String phone);
     boolean existsByEmail(String email);
+    Optional<Employee> findByCrmv(String crmv);
     Optional<Employee> findByPhone(String phone);
     Optional<Employee> findByEmail(String email);
-
 }
