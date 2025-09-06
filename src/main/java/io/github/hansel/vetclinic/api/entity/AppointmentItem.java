@@ -1,6 +1,7 @@
 package io.github.hansel.vetclinic.api.entity;
 
 import io.github.hansel.vetclinic.api.dto.request.AppointmentItemRequest;
+import io.github.hansel.vetclinic.api.entity.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -38,11 +39,16 @@ public class AppointmentItem {
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal unitPrice;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Status status;
+
     public AppointmentItem(AppointmentItemRequest dto, Appointment appointment, Offering offering, Employee employee) {
         this.appointment = appointment;
         this.offering = offering;
         this.employee = employee;
         this.amount = dto.amount();
         this.unitPrice = dto.unitPrice();
+        this.status = Status.PENDING;
     }
 }

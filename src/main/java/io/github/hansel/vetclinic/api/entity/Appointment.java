@@ -1,6 +1,7 @@
 package io.github.hansel.vetclinic.api.entity;
 
 import io.github.hansel.vetclinic.api.dto.request.AppointmentRequest;
+import io.github.hansel.vetclinic.api.entity.enums.Status;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -46,11 +47,16 @@ public class Appointment {
     @OneToMany(mappedBy = "appointment", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AppointmentItem> items = new ArrayList<>();
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Status status;
+
     public Appointment(AppointmentRequest dto, Pet pet, Customer customer) {
         this.dateTime = dto.dateTime();
         this.notes = dto.notes();
         this.pickupRequired = dto.pickupRequired();
         this.pet = pet;
         this.customer = customer;
+        this.status = Status.PENDING;
     }
 }
