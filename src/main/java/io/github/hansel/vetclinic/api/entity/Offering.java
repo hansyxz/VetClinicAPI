@@ -1,6 +1,6 @@
 package io.github.hansel.vetclinic.api.entity;
 
-import io.github.hansel.vetclinic.api.dto.request.OfferingRequest;
+import io.github.hansel.vetclinic.api.dto.offering.OfferingRequest;
 import io.github.hansel.vetclinic.api.entity.enums.Category;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

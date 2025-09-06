@@ -1,7 +1,7 @@
 package io.github.hansel.vetclinic.api.entity;
 
 import io.github.hansel.vetclinic.api.dto.error.ErrorResponse;
-import io.github.hansel.vetclinic.api.dto.request.PetRequest;
+import io.github.hansel.vetclinic.api.dto.pet.PetRequest;
 import io.github.hansel.vetclinic.api.entity.enums.Gender;
 import io.github.hansel.vetclinic.api.entity.enums.Species;
 import io.github.hansel.vetclinic.api.exception.BadRequestException;

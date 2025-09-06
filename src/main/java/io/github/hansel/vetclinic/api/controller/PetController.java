@@ -1,8 +1,8 @@
 package io.github.hansel.vetclinic.api.controller;
 
-import io.github.hansel.vetclinic.api.dto.request.PetRequest;
-import io.github.hansel.vetclinic.api.dto.response.PetDetailResponse;
-import io.github.hansel.vetclinic.api.dto.response.PetSummaryResponse;
+import io.github.hansel.vetclinic.api.dto.pet.PetRequest;
+import io.github.hansel.vetclinic.api.dto.pet.PetDetailResponse;
+import io.github.hansel.vetclinic.api.dto.pet.PetSummaryResponse;
 import io.github.hansel.vetclinic.api.service.PetService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

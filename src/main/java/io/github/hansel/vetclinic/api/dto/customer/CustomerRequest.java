@@ -1,4 +1,4 @@
-package io.github.hansel.vetclinic.api.dto.request;
+package io.github.hansel.vetclinic.api.dto.customer;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;

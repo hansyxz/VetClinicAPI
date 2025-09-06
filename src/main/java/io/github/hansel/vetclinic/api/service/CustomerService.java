@@ -1,9 +1,9 @@
 package io.github.hansel.vetclinic.api.service;
 
 import io.github.hansel.vetclinic.api.dto.error.ErrorResponse;
-import io.github.hansel.vetclinic.api.dto.request.CustomerRequest;
-import io.github.hansel.vetclinic.api.dto.response.CustomerDetailResponse;
-import io.github.hansel.vetclinic.api.dto.response.CustomerSummaryResponse;
+import io.github.hansel.vetclinic.api.dto.customer.CustomerRequest;
+import io.github.hansel.vetclinic.api.dto.customer.CustomerDetailResponse;
+import io.github.hansel.vetclinic.api.dto.customer.CustomerSummaryResponse;
 import io.github.hansel.vetclinic.api.entity.Customer;
 import io.github.hansel.vetclinic.api.exception.BusinessValidationException;
 import io.github.hansel.vetclinic.api.exception.NotFoundException;

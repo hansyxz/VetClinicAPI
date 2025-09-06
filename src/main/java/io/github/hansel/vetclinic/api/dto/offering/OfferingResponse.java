@@ -1,4 +1,4 @@
-package io.github.hansel.vetclinic.api.dto.response;
+package io.github.hansel.vetclinic.api.dto.offering;
 
 import io.github.hansel.vetclinic.api.entity.Offering;
 import io.github.hansel.vetclinic.api.entity.enums.Category;

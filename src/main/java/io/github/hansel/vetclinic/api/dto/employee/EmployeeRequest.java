@@ -1,4 +1,4 @@
-package io.github.hansel.vetclinic.api.dto.request;
+package io.github.hansel.vetclinic.api.dto.employee;
 
 import io.github.hansel.vetclinic.api.entity.enums.Role;
 import jakarta.validation.constraints.*;

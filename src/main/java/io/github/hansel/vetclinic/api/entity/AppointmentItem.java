@@ -1,6 +1,6 @@
 package io.github.hansel.vetclinic.api.entity;
 
-import io.github.hansel.vetclinic.api.dto.request.AppointmentItemRequest;
+import io.github.hansel.vetclinic.api.dto.appointment.AppointmentItemRequest;
 import io.github.hansel.vetclinic.api.entity.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

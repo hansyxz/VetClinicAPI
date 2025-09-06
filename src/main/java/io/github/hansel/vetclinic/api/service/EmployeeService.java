@@ -1,9 +1,9 @@
 package io.github.hansel.vetclinic.api.service;
 
 import io.github.hansel.vetclinic.api.dto.error.ErrorResponse;
-import io.github.hansel.vetclinic.api.dto.request.EmployeeRequest;
-import io.github.hansel.vetclinic.api.dto.response.EmployeeDetailResponse;
-import io.github.hansel.vetclinic.api.dto.response.EmployeeSummaryResponse;
+import io.github.hansel.vetclinic.api.dto.employee.EmployeeRequest;
+import io.github.hansel.vetclinic.api.dto.employee.EmployeeDetailResponse;
+import io.github.hansel.vetclinic.api.dto.employee.EmployeeSummaryResponse;
 import io.github.hansel.vetclinic.api.entity.Employee;
 import io.github.hansel.vetclinic.api.entity.enums.Role;
 import io.github.hansel.vetclinic.api.exception.BusinessValidationException;

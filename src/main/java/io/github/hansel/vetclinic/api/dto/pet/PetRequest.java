@@ -1,4 +1,4 @@
-package io.github.hansel.vetclinic.api.dto.request;
+package io.github.hansel.vetclinic.api.dto.pet;
 
 import io.github.hansel.vetclinic.api.entity.enums.Gender;
 import io.github.hansel.vetclinic.api.entity.enums.Species;

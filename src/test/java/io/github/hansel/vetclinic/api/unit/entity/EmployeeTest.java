@@ -1,6 +1,6 @@
 package io.github.hansel.vetclinic.api.unit.entity;
 
-import io.github.hansel.vetclinic.api.dto.request.EmployeeRequest;
+import io.github.hansel.vetclinic.api.dto.employee.EmployeeRequest;
 import io.github.hansel.vetclinic.api.entity.Employee;
 import io.github.hansel.vetclinic.api.entity.enums.Role;
 import io.github.hansel.vetclinic.api.exception.BadRequestException;

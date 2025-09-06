@@ -1,7 +1,7 @@
 package io.github.hansel.vetclinic.api.unit.entity;
 
-import io.github.hansel.vetclinic.api.dto.request.AddressRequest;
-import io.github.hansel.vetclinic.api.dto.request.CustomerRequest;
+import io.github.hansel.vetclinic.api.dto.customer.AddressRequest;
+import io.github.hansel.vetclinic.api.dto.customer.CustomerRequest;
 import io.github.hansel.vetclinic.api.entity.Customer;
 import io.github.hansel.vetclinic.api.exception.BadRequestException;
 import org.junit.jupiter.api.BeforeEach;

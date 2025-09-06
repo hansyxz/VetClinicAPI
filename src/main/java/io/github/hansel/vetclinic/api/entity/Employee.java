@@ -1,7 +1,7 @@
 package io.github.hansel.vetclinic.api.entity;
 
 import io.github.hansel.vetclinic.api.dto.error.ErrorResponse;
-import io.github.hansel.vetclinic.api.dto.request.EmployeeRequest;
+import io.github.hansel.vetclinic.api.dto.employee.EmployeeRequest;
 import io.github.hansel.vetclinic.api.entity.enums.Role;
 import io.github.hansel.vetclinic.api.exception.BadRequestException;
 import jakarta.persistence.*;

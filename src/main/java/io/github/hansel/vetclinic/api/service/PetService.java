@@ -1,9 +1,9 @@
 package io.github.hansel.vetclinic.api.service;
 
 import io.github.hansel.vetclinic.api.dto.error.ErrorResponse;
-import io.github.hansel.vetclinic.api.dto.request.PetRequest;
-import io.github.hansel.vetclinic.api.dto.response.PetDetailResponse;
-import io.github.hansel.vetclinic.api.dto.response.PetSummaryResponse;
+import io.github.hansel.vetclinic.api.dto.pet.PetRequest;
+import io.github.hansel.vetclinic.api.dto.pet.PetDetailResponse;
+import io.github.hansel.vetclinic.api.dto.pet.PetSummaryResponse;
 import io.github.hansel.vetclinic.api.entity.Customer;
 import io.github.hansel.vetclinic.api.entity.Pet;
 import io.github.hansel.vetclinic.api.entity.enums.Species;

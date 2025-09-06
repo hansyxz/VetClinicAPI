@@ -1,6 +1,6 @@
 package io.github.hansel.vetclinic.api.entity.common;
 
-import io.github.hansel.vetclinic.api.dto.request.AddressRequest;
+import io.github.hansel.vetclinic.api.dto.customer.AddressRequest;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;

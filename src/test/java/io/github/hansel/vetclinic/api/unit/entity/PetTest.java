@@ -1,6 +1,6 @@
 package io.github.hansel.vetclinic.api.unit.entity;
 
-import io.github.hansel.vetclinic.api.dto.request.PetRequest;
+import io.github.hansel.vetclinic.api.dto.pet.PetRequest;
 import io.github.hansel.vetclinic.api.entity.Customer;
 import io.github.hansel.vetclinic.api.entity.Pet;
 import io.github.hansel.vetclinic.api.entity.enums.Gender;

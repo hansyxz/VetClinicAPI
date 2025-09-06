@@ -1,7 +1,7 @@
 package io.github.hansel.vetclinic.api.entity;
 
 import io.github.hansel.vetclinic.api.dto.error.ErrorResponse;
-import io.github.hansel.vetclinic.api.dto.request.CustomerRequest;
+import io.github.hansel.vetclinic.api.dto.customer.CustomerRequest;
 import io.github.hansel.vetclinic.api.entity.common.Address;
 import io.github.hansel.vetclinic.api.exception.BadRequestException;
 import jakarta.persistence.*;

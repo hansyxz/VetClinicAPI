@@ -1,5 +1,7 @@
-package io.github.hansel.vetclinic.api.dto.response;
+package io.github.hansel.vetclinic.api.dto.appointment;
 
+import io.github.hansel.vetclinic.api.dto.employee.EmployeeSummaryResponse;
+import io.github.hansel.vetclinic.api.dto.offering.OfferingResponse;
 import io.github.hansel.vetclinic.api.entity.AppointmentItem;
 
 import java.math.BigDecimal;
