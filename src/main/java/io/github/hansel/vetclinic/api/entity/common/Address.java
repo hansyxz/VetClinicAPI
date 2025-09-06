@@ -29,18 +29,18 @@ public class Address {
     private String complement;
 
     public Address(AddressRequest dto) {
-        street = dto.street();
-        number = dto.number();
-        neighborhood = dto.neighborhood();
-        postalCode = dto.postalCode();
-        complement = dto.complement();
+        this.street = dto.street();
+        this.number = dto.number();
+        this.neighborhood = dto.neighborhood();
+        this.postalCode = dto.postalCode();
+        this.complement = dto.complement();
     }
 
     public void update(AddressRequest dto) {
-        street = dto.street() != null ? dto.street() : street;
-        number = dto.number() != null ? dto.number() : number;
-        neighborhood = dto.neighborhood() != null ? dto.neighborhood() : neighborhood;
-        postalCode = dto.postalCode() != null ? dto.postalCode() : postalCode;
-        complement = dto.complement() != null ? dto.complement() : complement;
+        this.street = dto.street() != null ? dto.street() : street;
+        this.number = dto.number() != null ? dto.number() : number;
+        this.neighborhood = dto.neighborhood() != null ? dto.neighborhood() : neighborhood;
+        this.postalCode = dto.postalCode() != null ? dto.postalCode() : postalCode;
+        this.complement = dto.complement() != null ? dto.complement() : complement;
     }
 }

@@ -52,18 +52,18 @@ public class Customer {
     private boolean active;
 
     public Customer(CustomerRequest dto) {
-        name = dto.name();
-        phone = dto.phone();
-        email = dto.email();
-        address = new Address(dto.address());
-        active = true;
+        this.name = dto.name();
+        this.phone = dto.phone();
+        this.email = dto.email();
+        this.address = new Address(dto.address());
+        this.active = true;
     }
 
     public void update(CustomerRequest dto) {
-        name = dto.name() != null ? dto.name() : name;
-        phone = dto.phone() != null ? dto.phone() : phone;
-        email = dto.email() != null ? dto.email() : email;
-        address.update(dto.address());
+        this.name = dto.name() != null ? dto.name() : name;
+        this.phone = dto.phone() != null ? dto.phone() : phone;
+        this.email = dto.email() != null ? dto.email() : email;
+        this.address.update(dto.address());
     }
 
     public void deactivate() {

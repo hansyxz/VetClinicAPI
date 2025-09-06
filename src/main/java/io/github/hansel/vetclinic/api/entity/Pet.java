@@ -59,27 +59,27 @@ public class Pet {
     private boolean active;
 
     public Pet(PetRequest dto, Customer customer) {
-        name = dto.name();
-        age = dto.age();
-        weightKg = dto.weightKg();
-        gender = dto.gender();
-        species = dto.species();
-        otherSpecies = dto.otherSpecies();
-        breed = dto.breed();
-        notes = dto.notes();
-        owner = customer;
-        active = true;
+        this.name = dto.name();
+        this.age = dto.age();
+        this.weightKg = dto.weightKg();
+        this.gender = dto.gender();
+        this.species = dto.species();
+        this.otherSpecies = dto.otherSpecies();
+        this.breed = dto.breed();
+        this.notes = dto.notes();
+        this.owner = customer;
+        this.active = true;
     }
 
     public void update(PetRequest dto) {
-        name = dto.name() != null ? dto.name() : name;
-        age = dto.age() != null ? dto.age() : age;
-        weightKg = dto.weightKg() != null ? dto.weightKg() : weightKg;
-        gender = dto.gender() != null ? dto.gender() : gender;
-        species = dto.species() != null ? dto.species() : species;
-        otherSpecies = dto.otherSpecies() != null ? dto.otherSpecies() : otherSpecies;
-        breed = dto.breed() != null ? dto.breed() : breed;
-        notes = dto.notes() != null ? dto.notes() : notes;
+        this.name = dto.name() != null ? dto.name() : name;
+        this.age = dto.age() != null ? dto.age() : age;
+        this.weightKg = dto.weightKg() != null ? dto.weightKg() : weightKg;
+        this.gender = dto.gender() != null ? dto.gender() : gender;
+        this.species = dto.species() != null ? dto.species() : species;
+        this.otherSpecies = dto.otherSpecies() != null ? dto.otherSpecies() : otherSpecies;
+        this.breed = dto.breed() != null ? dto.breed() : breed;
+        this.notes = dto.notes() != null ? dto.notes() : notes;
     }
 
     public void deactivate() {

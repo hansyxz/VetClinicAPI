@@ -13,9 +13,8 @@ public record EmployeeRequest(
         @Pattern(regexp = "^[0-9]{4,6}-[A-Z]{2}$", message = "CRMV must be in the format 12345-XX")
         String crmv,
         @NotBlank(message = "Phone cannot be blank")
-        @Pattern(regexp = "^[0-9]{10,11}$", message = "Phone number must have 10 or 11 digits")
+        @Pattern(regexp = "^[0-9]{11}$", message = "Phone number must have 11 digits")
         String phone,
         @NotBlank(message = "Email cannot be blank")
         @Email(message = "Email must be valid")
-        String email
-) {}
+        String email) {}

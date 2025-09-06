@@ -49,18 +49,18 @@ public class Employee {
     private boolean active;
 
     public Employee(EmployeeRequest dto) {
-        name = dto.name();
-        role = dto.role();
-        crmv = dto.crmv();
-        phone = dto.phone();
-        email = dto.email();
-        active = true;
+        this.name = dto.name();
+        this.role = dto.role();
+        this.crmv = dto.crmv();
+        this.phone = dto.phone();
+        this.email = dto.email();
+        this.active = true;
     }
 
     public void update(EmployeeRequest dto) {
-        name = dto.name() != null ? dto.name() : name;
-        phone = dto.phone() != null ? dto.phone() : phone;
-        email = dto.email() != null ? dto.email() : email;
+        this.name = dto.name() != null ? dto.name() : name;
+        this.phone = dto.phone() != null ? dto.phone() : phone;
+        this.email = dto.email() != null ? dto.email() : email;
     }
 
     public void deactivate() {

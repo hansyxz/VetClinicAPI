@@ -32,6 +32,8 @@ public class Offering {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Category category;
 
     @Column(nullable = false, precision = 10, scale = 2)
@@ -41,10 +43,10 @@ public class Offering {
     private boolean active;
 
     public Offering(OfferingRequest dto) {
-        name = dto.name();
-        description = dto.description();
-        category = dto.category();
-        price = dto.price();
-        active = true;
+        this.name = dto.name();
+        this.description = dto.description();
+        this.category = dto.category();
+        this.price = dto.price();
+        this.active = true;
     }
 }
