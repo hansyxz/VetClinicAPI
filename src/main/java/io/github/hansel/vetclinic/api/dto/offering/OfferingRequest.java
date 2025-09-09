@@ -17,4 +17,6 @@ public record OfferingRequest(
         @NotNull(message = "Price cannot be null")
         @DecimalMin(value = "0.01", message = "Price must be greater than 0")
         @Digits(integer = 8, fraction = 2, message = "Price format invalid")
-        BigDecimal price) {}
+        BigDecimal price,
+        @Min(value = 15, message = "Duration must be at least 15 minutes")
+        int durationMinutes) {}

@@ -5,8 +5,8 @@ import io.github.hansel.vetclinic.api.entity.enums.Category;
 
 import java.math.BigDecimal;
 
-public record OfferingResponse(Long id, String name, String description, Category category, BigDecimal price) {
+public record OfferingResponse(Long id, String name, String description, Category category, BigDecimal price, int durationMinutes) {
     public OfferingResponse(Offering offering) {
-        this(offering.getId(), offering.getName(), offering.getDescription(), offering.getCategory(), offering.getPrice());
+        this(offering.getId(), offering.getName(), offering.getDescription(), offering.getCategory(), offering.getPrice(), offering.getDurationMinutes());
     }
 }
