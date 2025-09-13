@@ -1,9 +1,9 @@
 package io.github.hansel.vetclinic.api.service;
 
-import io.github.hansel.vetclinic.api.dto.error.ErrorResponse;
-import io.github.hansel.vetclinic.api.dto.customer.CustomerRequest;
 import io.github.hansel.vetclinic.api.dto.customer.CustomerDetailResponse;
+import io.github.hansel.vetclinic.api.dto.customer.CustomerRequest;
 import io.github.hansel.vetclinic.api.dto.customer.CustomerSummaryResponse;
+import io.github.hansel.vetclinic.api.dto.error.ErrorResponse;
 import io.github.hansel.vetclinic.api.entity.Customer;
 import io.github.hansel.vetclinic.api.exception.BusinessValidationException;
 import io.github.hansel.vetclinic.api.exception.NotFoundException;
@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ public class CustomerService {
     @Autowired
     public CustomerRepository repository;
 
+    @Transactional
     public CustomerDetailResponse create(CustomerRequest request) {
         validateUniqueFieldsToCreate(request.phone(), request.email());
 
@@ -31,10 +33,12 @@ public class CustomerService {
         return new CustomerDetailResponse(customer);
     }
 
+    @Transactional(readOnly = true)
     public Page<CustomerSummaryResponse> findAllByActiveTrue(Pageable pageable) {
         return repository.findAllByActiveTrue(pageable).map(CustomerSummaryResponse::new);
     }
 
+    @Transactional(readOnly = true)
     public CustomerDetailResponse findByIdAndActiveTrue(Long id) {
         var customer = repository.findByIdAndActiveTrue(id)
                 .orElseThrow(() -> new NotFoundException("Customer not found with id " + id));
@@ -42,6 +46,7 @@ public class CustomerService {
         return new CustomerDetailResponse(customer);
     }
 
+    @Transactional
     public CustomerDetailResponse update(CustomerRequest request, Long id) {
         var customer = repository.findByIdAndActiveTrue(id)
                 .orElseThrow(() -> new NotFoundException("Customer not found with id " + id));
@@ -52,6 +57,7 @@ public class CustomerService {
         return new CustomerDetailResponse(customer);
     }
 
+    @Transactional
     public void deactivate(Long id) {
         var customer = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Customer not found with id " + id));
@@ -59,6 +65,7 @@ public class CustomerService {
         customer.deactivate();
     }
 
+    @Transactional
     public void activate(Long id) {
         var customer = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Customer not found with id " + id));

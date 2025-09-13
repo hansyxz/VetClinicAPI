@@ -1,8 +1,8 @@
 package io.github.hansel.vetclinic.api.service;
 
 import io.github.hansel.vetclinic.api.dto.error.ErrorResponse;
-import io.github.hansel.vetclinic.api.dto.pet.PetRequest;
 import io.github.hansel.vetclinic.api.dto.pet.PetDetailResponse;
+import io.github.hansel.vetclinic.api.dto.pet.PetRequest;
 import io.github.hansel.vetclinic.api.dto.pet.PetSummaryResponse;
 import io.github.hansel.vetclinic.api.entity.Customer;
 import io.github.hansel.vetclinic.api.entity.Pet;
@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class PetService {
     @Autowired
     public CustomerRepository customerRepository;
 
+    @Transactional
     public PetDetailResponse create(PetRequest request) {
         var customer = customerRepository.findByIdAndActiveTrue(request.ownerId())
                 .orElseThrow(() -> new NotFoundException("Customer not found with id " + request.ownerId()));
@@ -41,10 +43,12 @@ public class PetService {
         return new PetDetailResponse(pet);
     }
 
+    @Transactional(readOnly = true)
     public Page<PetSummaryResponse> findAllByActiveTrue(Pageable pageable) {
         return petRepository.findAllByActiveTrue(pageable).map(PetSummaryResponse::new);
     }
 
+    @Transactional(readOnly = true)
     public PetDetailResponse findByIdAndActiveTrue(Long id) {
         var pet = petRepository.findByIdAndActiveTrue(id)
                 .orElseThrow(() -> new NotFoundException("Pet not found with id " + id));
@@ -52,6 +56,7 @@ public class PetService {
         return new PetDetailResponse(pet);
     }
 
+    @Transactional
     public PetDetailResponse update(PetRequest request, Long id) {
         var pet = petRepository.findByIdAndActiveTrue(id)
                 .orElseThrow(() -> new NotFoundException("Pet not found with id " + id));
@@ -66,6 +71,7 @@ public class PetService {
         return new PetDetailResponse(pet);
     }
 
+    @Transactional
     public void deactivate(Long id) {
         var pet = petRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Pet not found with id " + id));
@@ -73,6 +79,7 @@ public class PetService {
         pet.deactivate();
     }
 
+    @Transactional
     public void activate(Long id) {
         var pet = petRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Pet not found with id " + id));

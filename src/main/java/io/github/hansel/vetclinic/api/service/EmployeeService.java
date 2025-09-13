@@ -1,9 +1,9 @@
 package io.github.hansel.vetclinic.api.service;
 
-import io.github.hansel.vetclinic.api.dto.error.ErrorResponse;
-import io.github.hansel.vetclinic.api.dto.employee.EmployeeRequest;
 import io.github.hansel.vetclinic.api.dto.employee.EmployeeDetailResponse;
+import io.github.hansel.vetclinic.api.dto.employee.EmployeeRequest;
 import io.github.hansel.vetclinic.api.dto.employee.EmployeeSummaryResponse;
+import io.github.hansel.vetclinic.api.dto.error.ErrorResponse;
 import io.github.hansel.vetclinic.api.entity.Employee;
 import io.github.hansel.vetclinic.api.entity.enums.Role;
 import io.github.hansel.vetclinic.api.exception.BusinessValidationException;
@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ public class EmployeeService {
     @Autowired
     public EmployeeRepository repository;
 
+    @Transactional
     public EmployeeDetailResponse create(EmployeeRequest request) {
         validateFieldsToCreate(request.role(), request.crmv(), request.phone(), request.email());
 
@@ -32,10 +34,12 @@ public class EmployeeService {
         return new EmployeeDetailResponse(eployee);
     }
 
+    @Transactional(readOnly = true)
     public Page<EmployeeSummaryResponse> findAllByActiveTrue(Pageable pageable) {
         return repository.findAllByActiveTrue(pageable).map(EmployeeSummaryResponse::new);
     }
 
+    @Transactional(readOnly = true)
     public EmployeeDetailResponse findByIdAndActiveTrue(Long id) {
         var employee = repository.findByIdAndActiveTrue(id)
                 .orElseThrow(() -> new NotFoundException("Employee not found with id " + id));
@@ -43,6 +47,7 @@ public class EmployeeService {
         return new EmployeeDetailResponse(employee);
     }
 
+    @Transactional
     public EmployeeDetailResponse update(EmployeeRequest request, Long id) {
         var employee = repository.findByIdAndActiveTrue(id)
                 .orElseThrow(() -> new NotFoundException("Employee not found with id " + id));
@@ -54,6 +59,7 @@ public class EmployeeService {
         return new EmployeeDetailResponse(employee);
     }
 
+    @Transactional
     public void deactivate(Long id) {
         var employee = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Employee not found with id " + id));
@@ -61,6 +67,7 @@ public class EmployeeService {
         employee.deactivate();
     }
 
+    @Transactional
     public void activate(Long id) {
         var employee = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Employee not found with id " + id));

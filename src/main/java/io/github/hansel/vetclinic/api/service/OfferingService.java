@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class OfferingService {
     @Autowired
     public OfferingRepository repository;
 
+    @Transactional
     public OfferingResponse create(OfferingRequest request) {
         validateUniqueFieldsToCreate(request.name());
 
@@ -29,10 +31,12 @@ public class OfferingService {
         return new OfferingResponse(offering);
     }
 
+    @Transactional(readOnly = true)
     public Page<OfferingResponse> findAllByActiveTrue(Pageable pageable) {
         return repository.findAllByActiveTrue(pageable).map(OfferingResponse::new);
     }
 
+    @Transactional(readOnly = true)
     public OfferingResponse findByIdAndActiveTrue(Long id) {
         var offering = repository.findByIdAndActiveTrue(id)
                 .orElseThrow(() -> new NotFoundException("Offering not found with id " + id));
@@ -40,10 +44,12 @@ public class OfferingService {
         return new OfferingResponse(offering);
     }
 
+    @Transactional(readOnly = true)
     public List<Offering> findAllById(List<Long> ids) {
         return repository.findAllById(ids);
     }
 
+    @Transactional
     public OfferingResponse update(OfferingRequest request, Long id) {
         var offering = repository.findByIdAndActiveTrue(id)
                 .orElseThrow(() -> new NotFoundException("Offering not found with id " + id));
@@ -54,6 +60,7 @@ public class OfferingService {
         return new OfferingResponse(offering);
     }
 
+    @Transactional
     public void deactivate(Long id) {
         var offering = repository.findByIdAndActiveTrue(id)
                 .orElseThrow(() -> new NotFoundException("Offering not found with id " + id));
@@ -61,6 +68,7 @@ public class OfferingService {
         offering.deactivate();
     }
 
+    @Transactional
     public void activate(Long id) {
         var offering = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Offering not found with id " + id));

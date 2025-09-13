@@ -5,5 +5,5 @@ public enum Status {
     CONFIRMED,
     IN_PROGRESS,
     DONE,
-    CANCEL
+    CANCELLED
 }

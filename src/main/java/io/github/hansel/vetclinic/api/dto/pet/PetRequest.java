@@ -13,10 +13,9 @@ public record PetRequest(
         @NotBlank(message = "Name cannot be blank")
         @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
         String name,
-        @NotNull(message = "Age cannot be null")
         @Min(value = 0, message = "Age must be at least 0")
         @Max(value = 120, message = "Age cannot exceed 120 years")
-        Integer age,
+        int age,
         @DecimalMin(value = "0.1", message = "Weight must be at least 0.1 kg")
         @DecimalMax(value = "100.0", message = "Weight cannot exceed 100 kg")
         BigDecimal weightKg,

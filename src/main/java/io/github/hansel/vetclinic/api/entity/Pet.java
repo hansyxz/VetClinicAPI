@@ -6,6 +6,8 @@ import io.github.hansel.vetclinic.api.entity.enums.Gender;
 import io.github.hansel.vetclinic.api.entity.enums.Species;
 import io.github.hansel.vetclinic.api.exception.BadRequestException;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -29,7 +31,9 @@ public class Pet {
     private String name;
 
     @Column(nullable = false)
-    private Integer age;
+    @Min(value = 0, message = "Age must be at least 0")
+    @Max(value = 120, message = "Age cannot exceed 120 years")
+    private int age;
 
     @Column(precision = 5, scale = 2)
     private BigDecimal weightKg;
@@ -73,7 +77,7 @@ public class Pet {
 
     public void update(PetRequest dto) {
         this.name = dto.name() != null ? dto.name() : name;
-        this.age = dto.age() != null ? dto.age() : age;
+        this.age = dto.age();
         this.weightKg = dto.weightKg() != null ? dto.weightKg() : weightKg;
         this.gender = dto.gender() != null ? dto.gender() : gender;
         this.species = dto.species() != null ? dto.species() : species;

@@ -10,6 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Table(
@@ -44,6 +45,14 @@ public class Employee {
 
     @Column(nullable = false, length = 100, unique = true)
     private String email;
+
+    @ManyToMany
+    @JoinTable(
+            name = "employee_offering",
+            joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "offering_id")
+    )
+    private List<Offering> offerings = new ArrayList<>();
 
     @Column(nullable = false)
     private boolean active;
